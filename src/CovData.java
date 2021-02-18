@@ -1,9 +1,4 @@
-import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
 
 public class CovData {
     private ArrayList<Double> xRowList = null;
@@ -24,7 +19,7 @@ public class CovData {
         this.yFromXList = new ArrayList<>();
         this.list1 = new ArrayList<>();
         this.list2 = new ArrayList<>();
-        setYFromXList();
+        addYFromXList();
     }
 
     public ArrayList<Double> getXList() {
@@ -98,7 +93,7 @@ public class CovData {
         return getCov() / (getStandartDeviation(xRowList) * getStandartDeviation(yRowList));
     }
 
-    private void setYFromXList(){
+    private void addYFromXList(){
         double tmp;
         for(int i = 0; i < xRowList.size(); i++){
             tmp = getR();
@@ -139,7 +134,6 @@ public class CovData {
 
     @Override
     public String toString() {
-        DecimalFormat f = new DecimalFormat("##0.000");
         String out = null;
 
         if(yRowList == null){
