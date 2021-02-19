@@ -3,7 +3,7 @@ import java.util.*;
 
 public class MainApp {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         boolean flag = true;
         ArrayList<Double> xRow = null;
@@ -17,8 +17,6 @@ public class MainApp {
 
             int input = sc.nextInt();
             int n;
-            String path;
-
             switch (input) {
                 case 1 -> {
                     System.out.println("Amount of elements: ");
@@ -35,10 +33,14 @@ public class MainApp {
                     yRow = randomInput(n);
                 }
                 case 3 -> {
+                    sc.nextLine();
                     System.out.println("Path to a file: ");
-                    path = sc.nextLine();
-                    xRow = fileInput(path);
-                    yRow = fileInput(path);
+                    System.out.println("X1:");
+                    String pathY = sc.nextLine();
+                    xRow = fileInput(pathY);
+                    System.out.println("X2:");
+                    pathY = sc.nextLine();
+                    yRow = fileInput(pathY);
                 }
                 case 0 -> flag = false;
                 default -> System.out.println("incorrect input");
@@ -76,10 +78,17 @@ public class MainApp {
 
 
     public static ArrayList<Double> consoleInput(int n){
-        ArrayList<Double> rowList = new ArrayList<>();
+        ArrayList<Double> rowList = new ArrayList<>(n);
         Scanner sc = new Scanner(System.in);
+        Double num;
         for(int i = 0; i < n; i++){
-            rowList.add(sc.nextDouble());
+            try {
+                rowList.add(sc.nextDouble());
+            }catch (InputMismatchException e){
+                System.out.println("Error: Entering numbers only!");
+                i--;
+                sc.next();
+            }
         }
 
         return rowList;
@@ -89,7 +98,7 @@ public class MainApp {
         final int MIN = 10;
         final int MAX = 99;
 
-        ArrayList<Double> rowList = new ArrayList<>();
+        ArrayList<Double> rowList = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             rowList.add((double) (MIN + (int) (Math.random() * ((MAX - MIN) + 1))));
         }
@@ -97,17 +106,25 @@ public class MainApp {
         return rowList;
     }
 
-    public static ArrayList<Double> fileInput(String path) throws FileNotFoundException {
+    public static ArrayList<Double> fileInput(String path){
         File file = new File(path);
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<Double> rowList = new ArrayList<>();
+        rowList.ensureCapacity(1000);
+
         while (scanner.hasNext()) {
-            if (scanner.hasNextInt()) {
-                rowList.add((double) scanner.nextInt());
+            if (scanner.hasNextDouble()) {
+                rowList.add(scanner.nextDouble());
             } else {
                 scanner.next();
             }
         }
+        rowList.trimToSize();
 
         return rowList;
     }

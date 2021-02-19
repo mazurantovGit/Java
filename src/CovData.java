@@ -16,9 +16,9 @@ public class CovData {
     public CovData(ArrayList<Double> xList, ArrayList<Double> yList){
         this.xRowList = xList;
         this.yRowList = yList;
-        this.yFromXList = new ArrayList<>();
-        this.list1 = new ArrayList<>();
-        this.list2 = new ArrayList<>();
+        this.yFromXList = new ArrayList<>(xRowList.size());
+        this.list1 = new ArrayList<>(xRowList.size());
+        this.list2 = new ArrayList<>(xRowList.size());
         addYFromXList();
     }
 
@@ -127,9 +127,6 @@ public class CovData {
 
         return var * 100;
     }
-
-
-
 
 
     @Override
