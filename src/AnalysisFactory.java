@@ -10,9 +10,12 @@ public class AnalysisFactory {
 
     public Analysis getAnalysis(String analysisType){
         if(VARIATIONAL_ANALYSIS.equals(analysisType)){
-            return new Variational(choise());
+            ArrayList<Double> listX = choise();
+            return new Variational(listX);
         }else if(CORRELATIONAL_ANALYSIS.equals(analysisType)){
-            return new Correlational(choise(), choise());
+            ArrayList<Double> listX = choise();
+            ArrayList<Double> listY = choise();
+            return new Correlational(listX, listY);
         }
 
         return null;

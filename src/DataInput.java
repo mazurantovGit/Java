@@ -24,6 +24,7 @@ public class DataInput {
             }
         }
 
+        sc.close();
         return rowList;
     }
 
